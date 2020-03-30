@@ -4,10 +4,12 @@ import Recipients from '../models/Recipients';
 class UserController {
   async store(req, res) {
 
+    console.log(req.body, 'req.body');
+
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       rua: Yup.string().required(),
-      numero: Yup.string().required(),
+      numero: Yup.number().required(),
       complemento: Yup.string().required(),
       estado: Yup.string().required(),
       cidade: Yup.string().required(),
@@ -41,10 +43,10 @@ class UserController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      id: Yup.integer().required(),
+      id: Yup.number().required(),
       name: Yup.string().required(),
       rua: Yup.string().required(),
-      numero: Yup.string().required(),
+      numero: Yup.number().required(),
       complemento: Yup.string().required(),
       estado: Yup.string().required(),
       cidade: Yup.string().required(),
