@@ -9,6 +9,7 @@ import authMiddleware from './app/middleware/auth';
 import RecipientController from './app/controllers/RecipientController';
 import FileController from './app/controllers/FileController';
 import EntregadorController from './app/controllers/EntregadorController';
+import SignatureController from './app/controllers/SignatureController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -25,6 +26,9 @@ routes.put('/recipients', authMiddleware, RecipientController.update);
 
 // files -> avatar
 routes.post('/files', upload.single('file'), FileController.store);
+
+// signature -> assinatura
+routes.post('/signature', upload.single('file'), SignatureController.store);
 
 // Entregadores
 routes.post('/entregadores', authMiddleware, EntregadorController.store);
