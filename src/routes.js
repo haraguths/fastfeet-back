@@ -10,6 +10,7 @@ import RecipientController from './app/controllers/RecipientController';
 import FileController from './app/controllers/FileController';
 import EntregadorController from './app/controllers/EntregadorController';
 import SignatureController from './app/controllers/SignatureController';
+import EncomendasController from './app/controllers/EncomendasController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -36,5 +37,7 @@ routes.get('/entregadores', authMiddleware, EntregadorController.index);
 routes.put('/entregadores', authMiddleware, EntregadorController.update);
 routes.delete('/entregadores/:id', authMiddleware, EntregadorController.delete);
 
+// Encomendas
+routes.post('/encomendas', authMiddleware, EncomendasController.store);
 
 export default routes;

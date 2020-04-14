@@ -4,8 +4,6 @@ import Recipients from '../models/Recipients';
 class UserController {
   async store(req, res) {
 
-    console.log(req.body, 'req.body');
-
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       rua: Yup.string().required(),
