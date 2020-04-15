@@ -38,6 +38,6 @@ routes.put('/entregadores', authMiddleware, EntregadorController.update);
 routes.delete('/entregadores/:id', authMiddleware, EntregadorController.delete);
 
 // Encomendas
-routes.post('/encomendas', authMiddleware, EncomendasController.store);
+routes.post('/encomendas', EncomendasController.store);
 
 export default routes;
