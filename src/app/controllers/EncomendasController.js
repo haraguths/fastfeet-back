@@ -50,6 +50,22 @@ class EncomendasController {
     });
   }
 
+  async index(req, res) {
+    const encomendas = await Encomendas.findAll({
+      attributes: ['id', 'product', 'start_at', 'end_at', 'canceled_at' ],
+      include: [{
+        model: Entregadores,
+        as: 'entregador',
+        attributes: ['name'],
+      },{
+        model: Recipient,
+        as: 'recipient',
+        attributes: ['name', 'rua', 'numero', 'complemento', 'estado', 'cidade', 'cep'],
+      }]
+    });
+
+    return res.json(encomendas);
+  }
 }
 
 export default new EncomendasController();
