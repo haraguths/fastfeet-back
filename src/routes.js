@@ -44,5 +44,7 @@ routes.get('/deliveryman/:id/delivered', DeliverymanController.delivered);
 // Encomendas
 routes.post('/encomendas', authMiddleware, EncomendasController.store);
 routes.get('/encomendas', authMiddleware, EncomendasController.index);
+routes.put('/encomendas', authMiddleware, EncomendasController.update);
+routes.delete('/encomendas/:id', authMiddleware, EncomendasController.delete);
 
 export default routes;
