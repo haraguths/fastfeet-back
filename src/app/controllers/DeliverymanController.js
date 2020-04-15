@@ -1,3 +1,8 @@
+import {
+  startOfDay,
+  endOfDay,
+} from 'date-fns';
+import { Op } from 'sequelize';
 import * as Yup from 'yup';
 import Entregadores from '../models/Entregadores';
 import Files from '../models/Files';
@@ -114,6 +119,67 @@ class DeliverymanController {
     return res.json(deliveries);
   }
 
+  async startDate(req, res) {
+
+    const schema = Yup.object().shape({
+      encomendaId: Yup.number().required(),
+    })
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    const entregador = await Entregadores.findByPk(req.params.id);
+    if(!entregador) {
+      return res.status(400).json({ error: 'Entregador not exists.' });
+    }
+
+    const encomendas = await Encomendas.findAll({
+      where: {
+        entregador_id: req.params.id,
+        start_at: {
+          [Op.between]:  [startOfDay(new Date()), endOfDay(new Date())]
+        }
+      }
+    });
+
+    if(encomendas.length > 4) {
+      return res.status(400).json({ error: 'Entregador já retirou 5 encomendas hoje.' });
+    }
+
+    const { encomendaId } = req.body;
+    const encomenda = await Encomendas.findByPk(encomendaId);
+
+    await encomenda.update({ start_at: new Date() });
+
+    return res.json(encomenda);
+  }
+
+  async endDate(req, res) {
+
+    const schema = Yup.object().shape({
+      encomendaId: Yup.number().required(),
+    })
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    const entregador = await Entregadores.findByPk(req.params.id);
+    if(!entregador) {
+      return res.status(400).json({ error: 'Entregador not exists.'});
+    }
+
+    const { encomendaId } = req.body;
+    const encomenda = await Encomendas.findByPk(encomendaId);
+    if(encomenda.entregador_id !== entregador.id) {
+      return res.status(400).json({ error: 'Entregador possui essa encomenda.'});
+    }
+
+    await encomenda.update({ end_at: new Date() });
+
+    return res.json(encomenda);
+  }
 }
 
 export default new DeliverymanController();

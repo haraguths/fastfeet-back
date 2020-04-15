@@ -40,11 +40,13 @@ routes.delete('/deliveryman/:id', authMiddleware, DeliverymanController.delete);
 // Entregadores free
 routes.get('/deliveryman/:id/deliveries', DeliverymanController.deliveries);
 routes.get('/deliveryman/:id/delivered', DeliverymanController.delivered);
+routes.post('/deliveryman/:id/startDate', DeliverymanController.startDate);
+routes.post('/deliveryman/:id/endDate', DeliverymanController.endDate);
 
 // Encomendas
 routes.post('/encomendas', authMiddleware, EncomendasController.store);
 routes.get('/encomendas', authMiddleware, EncomendasController.index);
 routes.put('/encomendas', authMiddleware, EncomendasController.update);
-routes.delete('/encomendas/:id', authMiddleware, EncomendasController.delete);
+routes.delete('/encomendas/:id', authMiddleware, EncomendasController.delete)
 
 export default routes;
