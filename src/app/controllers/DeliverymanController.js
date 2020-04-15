@@ -4,8 +4,8 @@ import {
 } from 'date-fns';
 import { Op } from 'sequelize';
 import * as Yup from 'yup';
-import Entregadores from '../models/Entregadores';
 import Files from '../models/Files';
+import Entregadores from '../models/Entregadores';
 import Encomendas from '../models/Encomendas';
 import Recipients from '../models/Recipients';
 

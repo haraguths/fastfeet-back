@@ -8,7 +8,11 @@ import Mail from '../../lib/Mail';
 class EncomendasController {
 
   async store(req, res) {
-
+    const schema = Yup.object().shape({
+      product: Yup.string().required(),
+      recipient_id: Yup.number().required(),
+      entregador_id: Yup.number().required(),
+    })
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });

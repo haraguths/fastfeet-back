@@ -11,6 +11,7 @@ import FileController from './app/controllers/FileController';
 import DeliverymanController from './app/controllers/DeliverymanController';
 import SignatureController from './app/controllers/SignatureController';
 import EncomendasController from './app/controllers/EncomendasController';
+import DeliveryProblemsController from './app/controllers/DeliveryProblemsController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -48,5 +49,13 @@ routes.post('/encomendas', authMiddleware, EncomendasController.store);
 routes.get('/encomendas', authMiddleware, EncomendasController.index);
 routes.put('/encomendas', authMiddleware, EncomendasController.update);
 routes.delete('/encomendas/:id', authMiddleware, EncomendasController.delete)
+
+// DeliveryProblems free
+routes.post('/delivery/:id/problems', DeliveryProblemsController.store);
+
+// DeliveryProblems
+routes.get('/delivery/problems', authMiddleware, DeliveryProblemsController.index);
+routes.get('/delivery/problems/all', authMiddleware, DeliveryProblemsController.all);
+routes.delete('/delivery/:id/problems', authMiddleware, DeliveryProblemsController.deleteDelivery);
 
 export default routes;
