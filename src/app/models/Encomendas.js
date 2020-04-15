@@ -15,9 +15,9 @@ class Encomendas extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Files, { foreignKey: 'recipient_id', as: 'recipient' });
-    this.belongsTo(models.Files, { foreignKey: 'entregador_id', as: 'entregador' });
-    this.belongsTo(models.Files, { foreignKey: 'signature_id', as: 'signature' });
+    this.belongsTo(models.Recipients, { foreignKey: 'recipient_id', as: 'recipient' });
+    this.belongsTo(models.Entregadores, { foreignKey: 'entregador_id', as: 'entregador' });
+    this.belongsTo(models.Signature, { foreignKey: 'signature_id', as: 'signature' });
   }
 }
 

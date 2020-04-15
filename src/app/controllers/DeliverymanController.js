@@ -1,8 +1,11 @@
 import * as Yup from 'yup';
 import Entregadores from '../models/Entregadores';
 import Files from '../models/Files';
+import Encomendas from '../models/Encomendas';
+import Recipients from '../models/Recipients';
 
-class EntregadorController {
+class DeliverymanController {
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -76,6 +79,41 @@ class EntregadorController {
 
     return res.json(entregador);
   }
+
+  async deliveries(req, res) {
+    const deliveries = await Encomendas.findAll({
+      where: { entregador_id: req.params.id },
+      attributes: ['id', 'product', 'start_at', 'end_at', 'canceled_at' ],
+      include: [{
+        model: Entregadores,
+        as: 'entregador',
+        attributes: ['name'],
+      },{
+        model: Recipients,
+        as: 'recipient',
+        attributes: ['name', 'rua', 'numero', 'complemento', 'estado', 'cidade', 'cep'],
+      }]
+    });
+    return res.json(deliveries);
+  }
+
+  async delivered(req, res) {
+    const deliveries = await Encomendas.findAll({
+      where: { entregador_id: req.params.id, end_at: null },
+      attributes: ['id', 'product', 'start_at', 'end_at', 'canceled_at' ],
+      include: [{
+        model: Entregadores,
+        as: 'entregador',
+        attributes: ['name'],
+      },{
+        model: Recipients,
+        as: 'recipient',
+        attributes: ['name', 'rua', 'numero', 'complemento', 'estado', 'cidade', 'cep'],
+      }]
+    });
+    return res.json(deliveries);
+  }
+
 }
 
-export default new EntregadorController();
+export default new DeliverymanController();

@@ -8,7 +8,7 @@ import SessionController from './app/controllers/SessionController';
 import authMiddleware from './app/middleware/auth';
 import RecipientController from './app/controllers/RecipientController';
 import FileController from './app/controllers/FileController';
-import EntregadorController from './app/controllers/EntregadorController';
+import DeliverymanController from './app/controllers/DeliverymanController';
 import SignatureController from './app/controllers/SignatureController';
 import EncomendasController from './app/controllers/EncomendasController';
 
@@ -32,10 +32,14 @@ routes.post('/files', upload.single('file'), FileController.store);
 routes.post('/signature', upload.single('file'), SignatureController.store);
 
 // Entregadores
-routes.post('/entregadores', authMiddleware, EntregadorController.store);
-routes.get('/entregadores', authMiddleware, EntregadorController.index);
-routes.put('/entregadores', authMiddleware, EntregadorController.update);
-routes.delete('/entregadores/:id', authMiddleware, EntregadorController.delete);
+routes.post('/deliveryman', authMiddleware, DeliverymanController.store);
+routes.get('/deliveryman', authMiddleware, DeliverymanController.index);
+routes.put('/deliveryman', authMiddleware, DeliverymanController.update);
+routes.delete('/deliveryman/:id', authMiddleware, DeliverymanController.delete);
+
+// Entregadores free
+routes.get('/deliveryman/:id/deliveries', DeliverymanController.deliveries);
+routes.get('/deliveryman/:id/delivered', DeliverymanController.delivered);
 
 // Encomendas
 routes.post('/encomendas', EncomendasController.store);
